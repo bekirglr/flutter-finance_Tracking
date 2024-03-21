@@ -1,6 +1,6 @@
 # Finans Takip Uygulaması
 
-Bu proje, Flutter kullanarak geliştirilen bir finans takip uygulamasını içerir. Uygulama, kullanıcıların gelir ve giderlerini kaydetmelerine, işlem geçmişini görüntülemelerine ve gerektiğinde işlemlerini güncellemelerine veya silebilmelerine olanak tanır. Veritabanı işlemleri için `sqflite` paketi kullanılmıştır ve veritabanı işlemlerini yönetmek için `DbHelper` sınıfı oluşturulmuştur.
+Bu proje, Flutter kullanarak geliştirilen bir finans takip uygulamasını içerir. Uygulama, kullanıcıların gelir ve giderlerini kaydetmelerine, işlem geçmişini görüntülemelerine ve gerektiğinde işlemlerini güncellemelerine veya silebilmelerine olanak tanır. Veritabanı işlemleri için `sqflite` paketi kullanılmıştır.
 
 ## Özellikler
 
