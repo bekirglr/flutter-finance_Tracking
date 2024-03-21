@@ -13,10 +13,15 @@ class DbHelper {
   // Veritabanına erişim sağlayan fonksiyon
   Future<Database?> get database async {
     // Eğer veritabanı mevcutsa, mevcut veritabanını döndür
+
     if (_database != null) return _database;
     // Eğer veritabanı yoksa, yeni bir tane oluştur
     _database = await _initDatabase();
-    return _database;
+    if (_database != null) {
+      return _database;
+    } else {
+      throw Exception('Failed to initialize database');
+    }
   }
 
   // Veritabanını başlatan ve yolunu belirleyen fonksiyon
@@ -43,7 +48,11 @@ class DbHelper {
   Future<int> insertTransaction(Transaction transaction) async {
     Database? db = await instance.database; // nullable db değişkeni oluşturduk
     // transactions tablosuna veri ekle
-    return await db!.insert('transactions', transaction.toMap()); // null check
+    return await db!.insert('transactions', {
+      'amount': transaction.amount,
+      'description': transaction.description,
+      'date': transaction.date,
+    });
   }
 
   // Tüm işlemleri getiren fonksiyon
