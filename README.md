@@ -1,16 +1,21 @@
-# finance_tracking_app
+# Finans Takip Uygulaması
 
-A new Flutter project.
+Bu proje, Flutter kullanarak geliştirilen bir finans takip uygulamasını içerir. Uygulama, kullanıcıların gelir ve giderlerini kaydetmelerine, işlem geçmişini görüntülemelerine ve gerektiğinde işlemlerini güncellemelerine veya silebilmelerine olanak tanır. Veritabanı işlemleri için `sqflite` paketi kullanılmıştır ve veritabanı işlemlerini yönetmek için `DbHelper` sınıfı oluşturulmuştur.
 
-## Getting Started
+## Özellikler
 
-This project is a starting point for a Flutter application.
+- Kullanıcılar gelir ve giderlerini kaydedebilir.
+- İşlem geçmişini görüntüleyebilirler.
+- Gerektiğinde işlemlerini güncelleyebilir veya silebilirler.
+- Veritabanı işlemleri için `sqflite` paketi kullanılmıştır.
 
-A few resources to get you started if this is your first Flutter project:
+## Kullanılan Teknolojiler
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter
+- Sqflite
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Nasıl Çalıştırılır
+
+1. Projeyi klonlayın: 
+   ```bash
+   git clone <repo_url>
