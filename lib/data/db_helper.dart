@@ -3,7 +3,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'dart:io';
 
-// Veritabanı işlemleri için yardımcı sınıf
 class DbHelper {
   static Database? _database;
   static final DbHelper instance = DbHelper._privateConstructor();
@@ -12,24 +11,23 @@ class DbHelper {
 
   // Veritabanına erişim sağlayan fonksiyon
   Future<Database?> get database async {
-    // Eğer veritabanı mevcutsa, mevcut veritabanını döndür
-
     if (_database != null) return _database;
-    // Eğer veritabanı yoksa, yeni bir tane oluştur
+
     _database = await _initDatabase();
-    if (_database != null) {
-      return _database;
-    } else {
-      throw Exception('Failed to initialize database');
-    }
+    return _database;
   }
 
   // Veritabanını başlatan ve yolunu belirleyen fonksiyon
   Future<Database> _initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, 'finance_database.db');
-    // Veritabanını aç ve oluştur
-    return await openDatabase(path, version: 1, onCreate: _createDb);
+
+    try {
+      return await openDatabase(path, version: 1, onCreate: _createDb);
+    } catch (e) {
+      print("Error opening database: $e");
+      throw Exception('Failed to open database');
+    }
   }
 
   // Veritabanında bir tablo oluşturan fonksiyon
@@ -57,10 +55,8 @@ class DbHelper {
 
   // Tüm işlemleri getiren fonksiyon
   Future<List<Transaction>> getTransactions() async {
-    Database? db = await instance.database; // nullable db değişkeni oluşturduk
-    // transactions tablosundan verileri al ve listeye dönüştür
-    List<Map<String, dynamic>> maps =
-        await db!.query('transactions'); // null check
+    Database? db = await instance.database;
+    List<Map<String, dynamic>> maps = await db!.query('transactions');
     return List.generate(maps.length, (i) {
       return Transaction(
         id: maps[i]['id'],
@@ -74,17 +70,23 @@ class DbHelper {
   // Bir işlemi güncellemek için kullanılan fonksiyon
   Future<int> updateTransaction(Transaction transaction) async {
     Database? db = await instance.database;
-    // İlgili id'ye sahip işlemi güncelle
-    return await db!.update('transactions', transaction.toMap(),
-        where: 'id = ?', whereArgs: [transaction.id]); // null check
+    return await db!.update(
+      'transactions',
+      {
+        'id': transaction.id,
+        'amount': transaction.amount,
+        'description': transaction.description,
+        'date': transaction.date,
+      },
+      where: 'id = ?',
+      whereArgs: [transaction.id],
+    );
   }
 
   // Bir işlemi silmek için kullanılan fonksiyon
   Future<int> deleteTransaction(int id) async {
     Database? db = await instance.database;
-    // İlgili id'ye sahip işlemi sil
-    return await db!.delete('transactions',
-        where: 'id = ?', whereArgs: [id]); // null check ekledik
+    return await db!.delete('transactions', where: 'id = ?', whereArgs: [id]);
   }
 }
 
@@ -95,19 +97,16 @@ class Transaction {
   final String description;
   final String date;
 
-  Transaction(
-      {required this.id,
-      required this.amount,
-      required this.description,
-      required this.date});
-
-  // İşlem modelini map'e dönüştüren fonksiyon
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'amount': amount,
-      'description': description,
-      'date': date,
-    };
-  }
+  Transaction({
+    required this.id,
+    required this.amount,
+    required this.description,
+    required this.date,
+  })  : assert(id >=
+            0), // Eksik: ID'nin 0'dan büyük veya eşit olduğunu kontrol edin
+        assert(amount >=
+            0), // Eksik: Amount'un 0'dan büyük veya eşit olduğunu kontrol edin
+        assert(description
+            .isNotEmpty), // Eksik: Description'ın boş olmadığını kontrol edin
+        assert(date.isNotEmpty); // Eksik: Date'in boş olmadığını kontrol edin
 }

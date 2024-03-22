@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // TextInputFormatter eklendi
 import '../data/db_helper.dart';
 
 class AddTransactionDialog extends StatefulWidget {
@@ -28,6 +29,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
               keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+              ], // Sadece sayısal veri girmesini sağlar
               onChanged: (value) {
                 setState(() {
                   _amount = double.parse(value);
