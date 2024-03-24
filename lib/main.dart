@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/transaction_list_screen.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'Finance App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: TransactionListScreen(),
+      home: HomePage(),
     );
   }
 }

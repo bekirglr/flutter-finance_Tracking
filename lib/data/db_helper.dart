@@ -44,6 +44,10 @@ class DbHelper {
 
   // Yeni bir işlem eklemek için kullanılan fonksiyon
   Future<int> insertTransaction(Transaction transaction) async {
+    if (transaction.amount <= 0 || transaction.description.isEmpty) {
+      throw Exception('Amount and description are required.');
+    }
+
     Database? db = await instance.database; // nullable db değişkeni oluşturduk
     // transactions tablosuna veri ekle
     return await db!.insert('transactions', {
@@ -93,8 +97,8 @@ class DbHelper {
 // İşlem modeli
 class Transaction {
   final int id;
-  final double amount;
-  final String description;
+  late double amount;
+  late String description;
   final String date;
 
   Transaction({
