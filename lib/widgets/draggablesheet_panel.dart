@@ -1,11 +1,9 @@
-// draggablesheet_panel.dart
-
 import 'package:flutter/material.dart';
 import '../data/db_helper.dart';
 import 'package:bottom_bar_with_sheet/bottom_bar_with_sheet.dart';
 
 class DraggableSheetPanel extends StatefulWidget {
-  const DraggableSheetPanel({super.key});
+  const DraggableSheetPanel({Key? key});
 
   @override
   State<DraggableSheetPanel> createState() => _DraggableSheetPanelState();
@@ -22,6 +20,8 @@ class _DraggableSheetPanelState extends State<DraggableSheetPanel> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomBarWithSheet(
+        autoClose: true,
+        curve: Curves.easeOut,
         controller: _bottomBarController,
         bottomBarTheme: const BottomBarTheme(
           decoration: BoxDecoration(
@@ -35,11 +35,10 @@ class _DraggableSheetPanelState extends State<DraggableSheetPanel> {
                   offset: Offset(0, 1),
                 )
               ]),
-          itemIconColor: Colors.grey,
         ),
         items: const [
-          BottomBarWithSheetItem(icon: Icons.people),
-          BottomBarWithSheetItem(icon: Icons.favorite),
+          BottomBarWithSheetItem(icon: Icons.assessment, label: "Gelir"),
+          BottomBarWithSheetItem(icon: Icons.trending_down, label: "Gider"),
         ],
         sheetChild: Padding(
           padding: const EdgeInsets.all(10.0),

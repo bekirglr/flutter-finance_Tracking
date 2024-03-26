@@ -11,7 +11,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Finance App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(),
+      theme: ThemeData(
+        iconTheme: const IconThemeData(
+          color: Colors.green,
+        ),
+      ),
       home: HomePage(),
     );
   }

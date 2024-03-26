@@ -16,14 +16,27 @@ class _HomePageState extends State<HomePage> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(100),
         child: AppBar(
+          foregroundColor: Colors.white,
+          centerTitle: true,
           title: const Text(
             'Ana Sayfa',
             style: TextStyle(color: Colors.white),
           ),
-          centerTitle: true,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
           ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+              child: IconButton(
+                  onPressed: () => {},
+                  icon: Icon(
+                    Icons.receipt_long,
+                    size: 25,
+                    color: Colors.white,
+                  )),
+            )
+          ],
           flexibleSpace: Container(
             decoration: BoxDecoration(
               boxShadow: const [
@@ -46,7 +59,27 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      drawer: const Drawer(),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+              title: const Text('Item 1'),
+              onTap: () {},
+            ),
+            ListTile(
+              title: const Text('Item 2'),
+              onTap: () {},
+            ),
+          ],
+        ),
+      ),
       body: const DraggableSheetPanel(),
     );
   }
