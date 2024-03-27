@@ -9,6 +9,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final TextEditingController _salaryController = TextEditingController();
+
+  @override
+  void dispose() {
+    _salaryController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +27,7 @@ class _HomePageState extends State<HomePage> {
           foregroundColor: Colors.white,
           centerTitle: true,
           title: const Text(
-            'Ana Sayfa',
+            'Bakiye',
             style: TextStyle(color: Colors.white),
           ),
           shape: RoundedRectangleBorder(
@@ -35,7 +43,24 @@ class _HomePageState extends State<HomePage> {
                     size: 25,
                     color: Colors.white,
                   )),
-            )
+            ),
+            SizedBox(
+              width: 150, // Or any other width that fits your design
+              child: TextField(
+                controller: _salaryController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  hintText: 'Maaşınızı girin',
+                  hintStyle: TextStyle(color: Colors.white),
+                  border: InputBorder.none,
+                ),
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
+                onChanged: (value) {
+                  // You can add any necessary logic here when salary changes
+                },
+              ),
+            ),
           ],
           flexibleSpace: Container(
             decoration: BoxDecoration(
@@ -80,7 +105,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: const DraggableSheetPanel(),
+      body: DraggableSheetPanel(),
     );
   }
 }

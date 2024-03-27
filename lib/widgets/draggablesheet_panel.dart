@@ -3,7 +3,7 @@ import '../data/db_helper.dart';
 import 'package:bottom_bar_with_sheet/bottom_bar_with_sheet.dart';
 
 class DraggableSheetPanel extends StatefulWidget {
-  const DraggableSheetPanel({Key? key});
+  const DraggableSheetPanel({super.key});
 
   @override
   State<DraggableSheetPanel> createState() => _DraggableSheetPanelState();
@@ -14,14 +14,10 @@ class _DraggableSheetPanelState extends State<DraggableSheetPanel> {
   double amount = 0.0;
   String description = '';
 
-  List<Transaction> transactions = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomBarWithSheet(
-        autoClose: true,
-        curve: Curves.easeOut,
         controller: _bottomBarController,
         bottomBarTheme: const BottomBarTheme(
           decoration: BoxDecoration(
@@ -35,9 +31,10 @@ class _DraggableSheetPanelState extends State<DraggableSheetPanel> {
                   offset: Offset(0, 1),
                 )
               ]),
+          itemIconColor: Colors.grey,
         ),
         items: const [
-          BottomBarWithSheetItem(icon: Icons.assessment, label: "Gelir"),
+          BottomBarWithSheetItem(icon: Icons.trending_up, label: "Gelir"),
           BottomBarWithSheetItem(icon: Icons.trending_down, label: "Gider"),
         ],
         sheetChild: Padding(
@@ -45,6 +42,27 @@ class _DraggableSheetPanelState extends State<DraggableSheetPanel> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              ButtonBar(
+                alignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextButton(
+                    onPressed: () => {},
+                    child: Text(
+                      "Tutar ekle",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    style: TextButton.styleFrom(backgroundColor: Colors.green),
+                  ),
+                  TextButton(
+                    onPressed: () => {},
+                    child: Text(
+                      "Tutar çıkar",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    style: TextButton.styleFrom(backgroundColor: Colors.green),
+                  )
+                ],
+              ),
               TextField(
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
@@ -70,77 +88,23 @@ class _DraggableSheetPanelState extends State<DraggableSheetPanel> {
               ),
               const SizedBox(height: 20.0),
               ElevatedButton(
-                onPressed: () async {
-                  final newTransaction = Transaction(
-                    id: 0,
-                    amount: amount,
-                    description: description,
-                    date: DateTime.now().toString(),
-                  );
-
-                  await DbHelper.instance.insertTransaction(
-                    newTransaction.amount,
-                    newTransaction.description,
-                    newTransaction.date,
-                  );
-
-                  final updatedTransactions =
-                      await DbHelper.instance.getTransactions();
-                  setState(() {
-                    transactions = updatedTransactions;
-                  });
-
-                  // Bildirim göster
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Transaction added successfully!'),
-                      duration: Duration(seconds: 2),
+                onPressed: () {
+                  // Yeni işlemi ekranından geri dönüş olarak gönder
+                  Navigator.pop(
+                    context,
+                    Transaction(
+                      id: 0, // Bu kısmı gerekli gördüğünüz şekilde düzenleyin
+                      amount: amount,
+                      description: description,
+                      date: DateTime.now().toString(),
                     ),
                   );
-
-                  // Amount ve description alanlarını sıfırla
-                  setState(() {
-                    amount = 0.0;
-                    description = '';
-                  });
                 },
                 child: const Text('Save'),
               ),
             ],
           ),
         ),
-      ),
-      body: Column(
-        children: [
-          const SizedBox(height: 20.0),
-          Text(
-            'Transactions',
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: transactions.length,
-              itemBuilder: (context, index) {
-                final transaction = transactions[index];
-                return ListTile(
-                  title: Text('Amount: ${transaction.amount.toString()}'),
-                  subtitle: Text('Description: ${transaction.description}'),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: () async {
-                      await DbHelper.instance.deleteTransaction(transaction.id);
-                      final updatedTransactions =
-                          await DbHelper.instance.getTransactions();
-                      setState(() {
-                        transactions = updatedTransactions;
-                      });
-                    },
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
       ),
     );
   }
