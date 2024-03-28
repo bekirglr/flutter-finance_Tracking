@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../screens/rapor.dart';
 import '../widgets/draggablesheet_panel.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,94 +23,107 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100),
-        child: AppBar(
-          foregroundColor: Colors.white,
-          centerTitle: true,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
-          actions: [
-            SizedBox(
-              width: 200,
-              child: TextField(
-                controller: _salaryController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  suffix: Icon(
-                    FontAwesomeIcons.turkishLiraSign,
-                    size: 20,
-                    color: Colors.black,
-                  ),
-                  hintText: "Bakiye Giriniz",
-                  hintStyle: TextStyle(
-                      color: Color.fromARGB(166, 158, 158, 158), fontSize: 20),
-                  border: InputBorder.none,
-                ),
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
-                textAlign: TextAlign.right,
-                onChanged: (value) {
-                  // You can add any necessary logic here when salary changes
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(75, 0, 10, 0),
-              child: IconButton(
-                  onPressed: () => {},
-                  icon: const Icon(
-                    Icons.receipt_long,
-                    size: 25,
-                    color: Colors.white,
-                  )),
-            ),
-          ],
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              boxShadow: const [
-                BoxShadow(
-                  blurRadius: 5,
-                  spreadRadius: 1,
-                  offset: Offset(0, 0),
-                )
-              ],
-              borderRadius: BorderRadius.circular(25),
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomRight,
-                colors: [
-                  Colors.indigo.shade900,
-                  Colors.blue.shade700,
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-              title: const Text('Item 1'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('Item 2'),
-              onTap: () {},
-            ),
-          ],
-        ),
-      ),
+      backgroundColor: const Color.fromARGB(238, 238, 238, 238),
+      appBar: _buildAppBar(),
+      drawer: _buildDrawer(),
       body: DraggableSheetPanel(),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      leading: IconButton(
+        icon: const Icon(Icons.settings),
+        onPressed: () {
+          Scaffold.of(context).openDrawer();
+        },
+        tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+      ),
+      centerTitle: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25),
+      ),
+      actions: [
+        _buildSalaryInput(),
+        IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ToReportScreen()),
+            );
+          },
+          icon: const Icon(
+            Icons.receipt_long,
+            size: 25,
+          ),
+        ),
+      ],
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          boxShadow: const [
+            BoxShadow(
+              blurRadius: 5,
+              spreadRadius: 1,
+              offset: Offset(0, 0),
+            )
+          ],
+          borderRadius: BorderRadius.circular(25),
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSalaryInput() {
+    return SizedBox(
+      width: 100,
+      child: TextField(
+        controller: _salaryController,
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+          suffix: Icon(
+            FontAwesomeIcons.turkishLiraSign,
+            size: 20,
+          ),
+          hintText: "Miktar Giriniz",
+          hintStyle: TextStyle(
+            color: Color.fromARGB(166, 158, 158, 158),
+            fontSize: 20,
+          ),
+          border: InputBorder.none,
+        ),
+        style: const TextStyle(
+          fontSize: 25,
+          fontWeight: FontWeight.w900,
+          color: Colors.black,
+        ),
+        textAlign: TextAlign.right,
+        onChanged: (value) {},
+      ),
+    );
+  }
+
+  Drawer _buildDrawer() {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Text('Drawer Header'),
+          ),
+          ListTile(
+            title: const Text('Item 1'),
+            onTap: () {},
+          ),
+          ListTile(
+            title: const Text('Item 2'),
+            onTap: () {},
+          ),
+        ],
+      ),
     );
   }
 }
