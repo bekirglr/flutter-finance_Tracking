@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         iconTheme: IconThemeData(
-          color: Colors.blue.shade700,
+          color: Colors.green.shade700,
         ),
       ),
       home: HomePage(),
