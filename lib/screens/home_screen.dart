@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/draggablesheet_panel.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,40 +27,42 @@ class _HomePageState extends State<HomePage> {
         child: AppBar(
           foregroundColor: Colors.white,
           centerTitle: true,
-          title: const Text(
-            'Bakiye',
-            style: TextStyle(color: Colors.white),
-          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
           ),
           actions: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-              child: IconButton(
-                  onPressed: () => {},
-                  icon: Icon(
-                    Icons.receipt_long,
-                    size: 25,
-                    color: Colors.white,
-                  )),
-            ),
             SizedBox(
-              width: 150, // Or any other width that fits your design
+              width: 200,
               child: TextField(
                 controller: _salaryController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  hintText: 'Maaşınızı girin',
-                  hintStyle: TextStyle(color: Colors.white),
+                  suffix: Icon(
+                    FontAwesomeIcons.turkishLiraSign,
+                    size: 20,
+                    color: Colors.black,
+                  ),
+                  hintText: "Bakiye Giriniz",
+                  hintStyle: TextStyle(
+                      color: Color.fromARGB(166, 158, 158, 158), fontSize: 20),
                   border: InputBorder.none,
                 ),
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
+                textAlign: TextAlign.right,
                 onChanged: (value) {
                   // You can add any necessary logic here when salary changes
                 },
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(75, 0, 10, 0),
+              child: IconButton(
+                  onPressed: () => {},
+                  icon: const Icon(
+                    Icons.receipt_long,
+                    size: 25,
+                    color: Colors.white,
+                  )),
             ),
           ],
           flexibleSpace: Container(
@@ -76,8 +79,8 @@ class _HomePageState extends State<HomePage> {
                 begin: Alignment.topRight,
                 end: Alignment.bottomRight,
                 colors: [
-                  Colors.green.shade900,
-                  Colors.lightGreen.shade800,
+                  Colors.indigo.shade900,
+                  Colors.blue.shade700,
                 ],
               ),
             ),

@@ -12,8 +12,8 @@ class MyApp extends StatelessWidget {
       title: 'Finance App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        iconTheme: const IconThemeData(
-          color: Colors.green,
+        iconTheme: IconThemeData(
+          color: Colors.blue.shade700,
         ),
       ),
       home: HomePage(),
