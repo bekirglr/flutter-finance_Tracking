@@ -10,11 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
-  sqflite: ^2.3.2
-  path_provider: ^2.1.2
-  intl: ^0.19.0
-  modal_bottom_sheet: ^3.0.0
-  bottom_bar_with_sheet: ^2.4.0
+  cloud_firestore: ^4.15.10
+  firebase_core: ^2.27.2
+  provider: ^6.1.2
+  simple_speed_dial: ^0.1.7
   font_awesome_flutter: ^10.7.0
 
 dev_dependencies:
@@ -26,7 +25,7 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
+  # assets:
     # - assets/images/bg_image.jpeg
     # - assets/images/bg_image2.jpeg
 
